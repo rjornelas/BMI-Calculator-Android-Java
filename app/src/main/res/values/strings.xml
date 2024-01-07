@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BMI-Calculator</string>
+    <string name="btn_calculate_text">Calculate</string>
+    <string name="tv_age_text">Age</string>
+    <string name="tv_weight_text">Weight</string>
+    <string name="tv_cm_text">cm</string>
+    <string name="tv_height_text">Height</string>
+    <string name="tv_female_text">Female</string>
+    <string name="tv_male_text">Male</string>
+</resources>
