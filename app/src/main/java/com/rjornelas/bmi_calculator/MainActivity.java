@@ -1,13 +1,17 @@
 package com.rjornelas.bmi_calculator;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
 
 import com.rjornelas.bmi_calculator.databinding.ActivityMainBinding;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,12 +34,10 @@ public class MainActivity extends AppCompatActivity {
             type = "Male";
             binding.clMale.setBackgroundColor(Color.GRAY); //TODO
         });
-
         binding.ivFemale.setOnClickListener(v -> {
             type = "Female";
             binding.clFemale.setBackgroundColor(Color.GRAY); //TODO
         });
-
         binding.sbHeight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-
         binding.ivMinusBtnAge.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         binding.ivPlusBtnAge.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         binding.ivPlusBtnWeight.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         binding.ivMinusBtnWeight.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -95,7 +93,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBmiResult();
+            }
+        });
+    }
 
+    private void showBmiResult() {
+        String resultText = String.format("Your BMI is: %.2f", calculateBmi());
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("BMI");
+        alertDialogBuilder.setMessage(resultText);
+        alertDialogBuilder.setPositiveButton("DONE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                binding.edHeight.setText("60");
+                binding.edWeight.setText("30");
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private double calculateBmi() {
+        double weight = Integer.parseInt(binding.edWeight.getText().toString());
+        double height = Integer.parseInt(binding.edHeight.getText().toString());
+        return (weight/((height/100)*(height/100)));
     }
 
     private void initUiValues() {
